@@ -1,3 +1,5 @@
+var holes =[];
+
 class Hole {
   constructor(x, y) {
     this.x = x;
@@ -5,7 +7,9 @@ class Hole {
     this.w = 25;
     this.h = 25;
 
-    new DeathCollider(this.x + 10, this.y + 10, 5, 5);
+    this.collider = {x: this.x+10, y:this.y+10, w:(this.w-20)/2, h:(this.w-20)/2};
+
+    holes.push(this);
   }
 
   draw() {
@@ -13,7 +17,9 @@ class Hole {
     rect(this.x, this.y, this.w, this.h);
   }
 
-  update() {
-    this.draw();
+  static update() {
+    for (var hole of holes) {
+      hole.draw();
+    }
   }
 }

@@ -1,4 +1,10 @@
 function placeFree(rect) {
+  let solids = walls;
+  for(var solid of solids) {
+    if (collision(rect, solid)) {
+      return false;
+    }
+  }
   return true;
 }
 
