@@ -2,11 +2,13 @@ class Wizard {
   constructor(x, y) {
     this.x = x;
     this.y = y;
-    this.w = 50;
-    this.h = 50;
+    this.w = 25;
+    this.h = 25;
+    this.z = 0;
+    this.zspeed = 0;
 
     this.dir = 0;
-    this.speed = 4;
+    this.speed = 2;
   }
 
   move() {
@@ -41,13 +43,40 @@ class Wizard {
     }
   }
 
+  jump() {
+    if (this.z < 0) {
+      this.z = 0;
+      this.zspeed = 0;
+      if (register.getKey(" ")) {
+        this.zspeed = 2;
+      }
+    } else {
+      this.z += this.zspeed
+      this.zspeed -= .1;
+    }
+  }
+
+  fall() {
+    this.z--;
+    if (this.z<-20) {
+      this.x=50;
+      this.y=50;
+      this.z = 0;
+      this.canmove = true;
+    }
+  }
+
   draw() {
-    fill(255,0,0);
-    rect(this.x, this.y, this.w, this.h);
+    fill(100,100,250);
+    rect(this.x-this.z/4, this.y-this.z/4, this.w+this.z/2, this.h+this.z/2);
   }
 
   update() {
-    this.move();
+    if (canMove) {
+      this.move();
+      this.jump();
+  }
+
     this.draw();
   }
 }
